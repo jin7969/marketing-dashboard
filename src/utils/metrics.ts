@@ -39,6 +39,14 @@ export const calculateMetrics = (stats: DailyStat[]): MetricData => {
   };
 };
 
+/**
+ * 특정 캠페인의 지표만 계산
+ */
+export const calculateCampaignMetrics = (campaignId: string, allStats: DailyStat[]): MetricData => {
+  const campaignStats = allStats.filter((stat) => stat.campaignId === campaignId);
+  return calculateMetrics(campaignStats);
+};
+
 export const formatCurrency = (value: number) => {
   return new Intl.NumberFormat('ko-KR', {
     style: 'currency',
