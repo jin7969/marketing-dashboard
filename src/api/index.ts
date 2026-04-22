@@ -2,32 +2,37 @@ import type { Campaign, DailyStat } from '../types/dashboard';
 
 const BASE_URL = 'http://localhost:3001';
 
-export async function fetchCampaigns(): Promise<Campaign[]> {
+const handleResponse = async (response: Response) => {
+  if (!response.ok) {
+    throw new Error(`API Error: ${response.statusText}`);
+  }
+  return response.json();
+};
+
+export const getCampaigns = async (): Promise<Campaign[]> => {
   const response = await fetch(`${BASE_URL}/campaigns`);
-  if (!response.ok) {
-    throw new Error('Failed to fetch campaigns');
-  }
-  return response.json();
-}
+  return handleResponse(response);
+};
 
-export async function fetchDailyStats(): Promise<DailyStat[]> {
+export const getDailyStats = async (): Promise<DailyStat[]> => {
   const response = await fetch(`${BASE_URL}/daily_stats`);
-  if (!response.ok) {
-    throw new Error('Failed to fetch daily stats');
-  }
-  return response.json();
-}
+  return handleResponse(response);
+};
 
-export async function updateCampaignStatus(id: string, status: Campaign['status']): Promise<Campaign> {
+export const updateCampaignStatus = async (id: string, status: string): Promise<Campaign> => {
   const response = await fetch(`${BASE_URL}/campaigns/${id}`, {
     method: 'PATCH',
-    headers: {
-      'Content-Type': 'application/json',
-    },
+    headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ status }),
   });
-  if (!response.ok) {
-    throw new Error('Failed to update campaign status');
-  }
-  return response.json();
-}
+  return handleResponse(response);
+};
+
+export const createCampaign = async (campaign: Omit<Campaign, 'id'>): Promise<Campaign> => {
+  const response = await fetch(`${BASE_URL}/campaigns`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(campaign),
+  });
+  return handleResponse(response);
+};
