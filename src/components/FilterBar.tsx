@@ -23,7 +23,7 @@ export default function FilterBar() {
   };
 
   return (
-    <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 mb-8 space-y-6">
+    <div className="mb-8 space-y-6 rounded-xl border border-gray-100 bg-white p-6 shadow-sm">
       <div className="flex flex-wrap gap-8">
         {/* 기간 필터 */}
         <div className="flex flex-col gap-2">
@@ -32,19 +32,15 @@ export default function FilterBar() {
             <input
               type="date"
               value={format(dateRange.startDate, 'yyyy-MM-dd')}
-              onChange={(e) =>
-                setDateRange({ ...dateRange, startDate: new Date(e.target.value) })
-              }
-              className="px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              onChange={(e) => setDateRange({ ...dateRange, startDate: new Date(e.target.value) })}
+              className="rounded-lg border border-gray-200 px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
             />
             <span className="text-gray-400">~</span>
             <input
               type="date"
               value={format(dateRange.endDate, 'yyyy-MM-dd')}
-              onChange={(e) =>
-                setDateRange({ ...dateRange, endDate: new Date(e.target.value) })
-              }
-              className="px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              onChange={(e) => setDateRange({ ...dateRange, endDate: new Date(e.target.value) })}
+              className="rounded-lg border border-gray-200 px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
             />
           </div>
         </div>
@@ -66,23 +62,24 @@ export default function FilterBar() {
         />
       </div>
 
-      <div className="flex items-center justify-between pt-4 border-t border-gray-50">
+      <div className="flex items-center justify-between border-t border-gray-50 pt-4">
         <div className="relative w-full max-w-xs">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+          <Search className="absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-gray-400" />
           <input
             type="text"
             placeholder="캠페인명 검색"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full pl-10 pr-4 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full rounded-lg border border-gray-200 py-2 pr-4 pl-10 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
           />
         </div>
 
         <button
+          type="reset"
           onClick={resetFilters}
-          className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors"
+          className="flex cursor-pointer items-center gap-2 px-4 py-2 text-sm font-medium text-gray-600 transition-colors hover:text-gray-900"
         >
-          <RotateCcw className="w-4 h-4" />
+          <RotateCcw className="h-4 w-4" />
           필터 초기화
         </button>
       </div>
@@ -105,14 +102,14 @@ function FilterGroup({
   return (
     <div className="flex flex-col gap-2">
       <label className="text-sm font-semibold text-gray-700">{label}</label>
-      <div className="flex gap-3 h-full items-center">
+      <div className="flex h-full items-center gap-3">
         {options.map((option) => (
-          <label key={option.value} className="flex items-center gap-2 cursor-pointer">
+          <label key={option.value} className="flex cursor-pointer items-center gap-2">
             <input
               type="checkbox"
               checked={selected.includes(option.value)}
               onChange={() => onToggle(option.value)}
-              className="w-4 h-4 text-blue-600 rounded border-gray-300 focus:ring-blue-500"
+              className="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
             />
             <span className="text-sm text-gray-600">{option.label}</span>
           </label>
