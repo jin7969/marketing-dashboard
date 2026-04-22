@@ -1,113 +1,123 @@
-import React from 'react';
-import { useFilterStore, type StatusType, type PlatformType } from '../store/useFilterStore';
+import { format } from 'date-fns';
+import { useFilterStore } from '../store/useFilterStore';
+import type { CampaignStatus, Platform } from '../types/dashboard';
+import { STATUS_OPTIONS, PLATFORM_OPTIONS } from '../constants/dashboard';
+import { RotateCcw, Search } from 'lucide-react';
 
-export const FilterBar: React.FC = () => {
-  const { startDate, endDate, status, platform, setStartDate, setEndDate, setStatus, setPlatform, resetFilters } =
-    useFilterStore();
+export default function FilterBar() {
+  const {
+    dateRange,
+    statuses,
+    platforms,
+    searchTerm,
+    setDateRange,
+    setStatuses,
+    setPlatforms,
+    setSearchTerm,
+    resetFilters,
+  } = useFilterStore();
 
-  const handleStatusChange = (value: StatusType) => {
-    if (status.includes(value)) {
-      setStatus(status.filter((s) => s !== value));
-    } else {
-      setStatus([...status, value]);
-    }
-  };
-
-  const handlePlatformChange = (value: PlatformType) => {
-    if (platform.includes(value)) {
-      setPlatform(platform.filter((p) => p !== value));
-    } else {
-      setPlatform([...platform, value]);
-    }
+  // 토글 로직 공통화
+  const toggleFilter = <T,>(current: T[], item: T, setter: (val: T[]) => void) => {
+    setter(current.includes(item) ? current.filter((i) => i !== item) : [...current, item]);
   };
 
   return (
-    <div className="mb-6 space-y-4 rounded-lg border bg-white p-5 shadow-sm md:flex md:items-center md:gap-8 md:space-y-0">
-      {/* 집행 기간 */}
-      <div className="flex items-center gap-3">
-        <label className="text-sm font-bold whitespace-nowrap text-gray-700">집행 기간</label>
-        <div className="flex items-center gap-2">
+    <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 mb-8 space-y-6">
+      <div className="flex flex-wrap gap-8">
+        {/* 기간 필터 */}
+        <div className="flex flex-col gap-2">
+          <label className="text-sm font-semibold text-gray-700">집행 기간</label>
+          <div className="flex items-center gap-2">
+            <input
+              type="date"
+              value={format(dateRange.startDate, 'yyyy-MM-dd')}
+              onChange={(e) =>
+                setDateRange({ ...dateRange, startDate: new Date(e.target.value) })
+              }
+              className="px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+            <span className="text-gray-400">~</span>
+            <input
+              type="date"
+              value={format(dateRange.endDate, 'yyyy-MM-dd')}
+              onChange={(e) =>
+                setDateRange({ ...dateRange, endDate: new Date(e.target.value) })
+              }
+              className="px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+        </div>
+
+        {/* 상태 필터 */}
+        <FilterGroup
+          label="상태"
+          options={STATUS_OPTIONS}
+          selected={statuses}
+          onToggle={(val) => toggleFilter(statuses, val as CampaignStatus, setStatuses)}
+        />
+
+        {/* 매체 필터 */}
+        <FilterGroup
+          label="매체"
+          options={PLATFORM_OPTIONS}
+          selected={platforms}
+          onToggle={(val) => toggleFilter(platforms, val as Platform, setPlatforms)}
+        />
+      </div>
+
+      <div className="flex items-center justify-between pt-4 border-t border-gray-50">
+        <div className="relative w-full max-w-xs">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
           <input
-            type="date"
-            value={startDate}
-            onChange={(e) => setStartDate(e.target.value)}
-            className="rounded border px-2 py-1.5 text-sm outline-none focus:ring-2 focus:ring-blue-500"
-          />
-          <span className="text-gray-400">~</span>
-          <input
-            type="date"
-            value={endDate}
-            onChange={(e) => setEndDate(e.target.value)}
-            className="rounded border px-2 py-1.5 text-sm outline-none focus:ring-2 focus:ring-blue-500"
+            type="text"
+            placeholder="캠페인명 검색"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="w-full pl-10 pr-4 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
-      </div>
 
-      {/* 상태 (다중 선택) */}
-      <div className="flex items-center gap-3">
-        <label className="text-sm font-bold whitespace-nowrap text-gray-700">상태</label>
-        <div className="flex gap-2">
-          {[
-            { id: 'active', label: '진행중' },
-            { id: 'paused', label: '일시중지' },
-            { id: 'ended', label: '종료' },
-          ].map((item) => (
-            <button
-              key={item.id}
-              onClick={() => handleStatusChange(item.id as StatusType)}
-              className={`rounded-full px-3 py-1.5 text-xs font-medium transition-colors ${
-                status.includes(item.id as StatusType)
-                  ? 'bg-blue-600 text-white'
-                  : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-              }`}
-            >
-              {item.label}
-            </button>
-          ))}
-        </div>
-      </div>
-
-      {/* 매체 (다중 선택) */}
-      <div className="flex items-center gap-3">
-        <label className="text-sm font-bold whitespace-nowrap text-gray-700">매체</label>
-        <div className="flex gap-2">
-          {['Google', 'Meta', 'Naver'].map((p) => (
-            <button
-              key={p}
-              onClick={() => handlePlatformChange(p as PlatformType)}
-              className={`rounded-full px-3 py-1.5 text-xs font-medium transition-colors ${
-                platform.includes(p as PlatformType)
-                  ? 'bg-blue-600 text-white'
-                  : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-              }`}
-            >
-              {p}
-            </button>
-          ))}
-        </div>
-      </div>
-
-      {/* 초기화 */}
-      <button
-        onClick={resetFilters}
-        className="flex items-center gap-1 text-sm font-medium text-gray-500 hover:text-gray-800 md:ml-auto"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className="h-4 w-4"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
+        <button
+          onClick={resetFilters}
+          className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors"
         >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
-          />
-        </svg>
-        초기화
-      </button>
+          <RotateCcw className="w-4 h-4" />
+          필터 초기화
+        </button>
+      </div>
     </div>
   );
-};
+}
+
+// 내부 재사용 컴포넌트
+function FilterGroup({
+  label,
+  options,
+  selected,
+  onToggle,
+}: {
+  label: string;
+  options: { label: string; value: string }[];
+  selected: string[];
+  onToggle: (value: string) => void;
+}) {
+  return (
+    <div className="flex flex-col gap-2">
+      <label className="text-sm font-semibold text-gray-700">{label}</label>
+      <div className="flex gap-3 h-full items-center">
+        {options.map((option) => (
+          <label key={option.value} className="flex items-center gap-2 cursor-pointer">
+            <input
+              type="checkbox"
+              checked={selected.includes(option.value)}
+              onChange={() => onToggle(option.value)}
+              className="w-4 h-4 text-blue-600 rounded border-gray-300 focus:ring-blue-500"
+            />
+            <span className="text-sm text-gray-600">{option.label}</span>
+          </label>
+        ))}
+      </div>
+    </div>
+  );
+}
