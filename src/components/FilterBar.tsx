@@ -2,18 +2,16 @@ import { format } from 'date-fns';
 import { useFilterStore } from '../store/useFilterStore';
 import type { CampaignStatus, Platform } from '../types/dashboard';
 import { STATUS_OPTIONS, PLATFORM_OPTIONS } from '../constants/dashboard';
-import { RotateCcw, Search } from 'lucide-react';
+import { RotateCcw } from 'lucide-react';
 
 export default function FilterBar() {
   const {
     dateRange,
     statuses,
     platforms,
-    searchTerm,
     setDateRange,
     setStatuses,
     setPlatforms,
-    setSearchTerm,
     resetFilters,
   } = useFilterStore();
 
@@ -62,18 +60,7 @@ export default function FilterBar() {
         />
       </div>
 
-      <div className="flex items-center justify-between border-t border-gray-50 pt-4">
-        <div className="relative w-full max-w-xs">
-          <Search className="absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-gray-400" />
-          <input
-            type="text"
-            placeholder="캠페인명 검색"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full rounded-lg border border-gray-200 py-2 pr-4 pl-10 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
-          />
-        </div>
-
+      <div className="flex items-center justify-end border-t border-gray-50 pt-4">
         <button
           type="reset"
           onClick={resetFilters}

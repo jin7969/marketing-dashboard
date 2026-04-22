@@ -6,7 +6,7 @@ import { useFilterStore } from '../store/useFilterStore';
 import { calculateMetrics } from '../utils/metrics';
 
 export const useDashboardData = () => {
-  const { dateRange, statuses, platforms, searchTerm } = useFilterStore();
+  const { dateRange, statuses, platforms } = useFilterStore();
 
   const { data: campaigns = [], isLoading: isLoadingCampaigns } = useQuery({
     queryKey: ['campaigns'],
@@ -18,18 +18,16 @@ export const useDashboardData = () => {
     queryFn: getDailyStats,
   });
 
-  // 1. 캠페인 필터링 (메모이제이션)
+  // 1. 캠페인 필터링 (상태, 매체만 적용 - 검색어 제외)
   const filteredCampaigns = useMemo(() => {
     return campaigns.filter((campaign) => {
       const matchesStatus = statuses.includes(campaign.status);
       const matchesPlatform = platforms.includes(campaign.platform);
-      const name = campaign.name || '';
-      const matchesSearch = name.toLowerCase().includes(searchTerm.toLowerCase());
-      return matchesStatus && matchesPlatform && matchesSearch;
+      return matchesStatus && matchesPlatform;
     });
-  }, [campaigns, statuses, platforms, searchTerm]);
+  }, [campaigns, statuses, platforms]);
 
-  // 2. 일별 통계 필터링 및 지표 계산 (메모이제이션)
+  // 2. 일별 통계 필터링 및 지표 계산
   const { filteredStats, metrics } = useMemo(() => {
     const campaignIds = new Set(filteredCampaigns.map((c) => c.id));
 
