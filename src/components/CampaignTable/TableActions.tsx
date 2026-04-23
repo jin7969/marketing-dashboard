@@ -31,7 +31,7 @@ export function TableActions({
           <Search className="absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-gray-400" />
           <input
             type="text"
-            placeholder="캠페인명 실시간 검색"
+            placeholder="캠페인명 검색"
             value={searchTerm}
             onChange={(e) => onSearchChange(e.target.value)}
             className="w-full rounded-lg border border-gray-200 bg-white py-1.5 pr-4 pl-10 text-xs focus:ring-2 focus:ring-blue-500 focus:outline-none"
