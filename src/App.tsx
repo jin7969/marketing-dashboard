@@ -25,10 +25,10 @@ function Dashboard() {
               </div>
             </div>
           ) : (
-            <div className="animate-in fade-in space-y-6 duration-500">
+            <>
               <DashboardChart />
               <CampaignTable />
-            </div>
+            </>
           )}
         </main>
       </div>
