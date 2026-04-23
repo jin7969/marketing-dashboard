@@ -28,14 +28,14 @@ export default function FilterBar() {
                 type="date"
                 value={format(dateRange.startDate, 'yyyy-MM-dd')}
                 onChange={(e) => setDateRange({ ...dateRange, startDate: new Date(e.target.value) })}
-                className="w-36 rounded-lg border border-gray-200 bg-gray-50 px-3 py-2 text-sm font-medium text-gray-700"
+                className="w-36 rounded-lg border border-gray-200 px-3 py-2 text-sm font-medium text-gray-700"
               />
               <span className="font-light text-gray-300">~</span>
               <input
                 type="date"
                 value={format(dateRange.endDate, 'yyyy-MM-dd')}
                 onChange={(e) => setDateRange({ ...dateRange, endDate: new Date(e.target.value) })}
-                className="w-36 rounded-lg border border-gray-200 bg-gray-50 px-3 py-2 text-sm font-medium text-gray-700"
+                className="w-36 rounded-lg border border-gray-200 px-3 py-2 text-sm font-medium text-gray-700"
               />
             </div>
           </div>
