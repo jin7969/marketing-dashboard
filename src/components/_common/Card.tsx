@@ -7,7 +7,7 @@ interface CardProps {
   headerAction?: ReactNode;
 }
 
-export default function Card({ children, className = '', title, headerAction }: CardProps) {
+export function Card({ children, className = '', title, headerAction }: CardProps) {
   return (
     <div className={`overflow-hidden rounded-xl border border-gray-100 bg-white shadow-sm ${className}`}>
       {(title || headerAction) && (
