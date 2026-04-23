@@ -1,38 +1,28 @@
+import axios from 'axios';
 import type { Campaign, DailyStat } from '../types/dashboard';
 
-const BASE_URL = 'http://localhost:3001';
-
-const handleResponse = async (response: Response) => {
-  if (!response.ok) {
-    throw new Error(`API Error: ${response.statusText}`);
-  }
-  return response.json();
-};
+const api = axios.create({
+  baseURL: 'http://localhost:3001',
+});
 
 export const getCampaigns = async (): Promise<Campaign[]> => {
-  const response = await fetch(`${BASE_URL}/campaigns`);
-  return handleResponse(response);
+  const { data } = await api.get<Campaign[]>('/campaigns');
+  return data;
 };
 
 export const getDailyStats = async (): Promise<DailyStat[]> => {
-  const response = await fetch(`${BASE_URL}/daily_stats`);
-  return handleResponse(response);
+  const { data } = await api.get<DailyStat[]>('/daily_stats');
+  return data;
 };
 
 export const updateCampaignStatus = async (id: string, status: string): Promise<Campaign> => {
-  const response = await fetch(`${BASE_URL}/campaigns/${id}`, {
-    method: 'PATCH',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ status }),
-  });
-  return handleResponse(response);
+  const { data } = await api.patch<Campaign>(`/campaigns/${id}`, { status });
+  return data;
 };
 
 export const createCampaign = async (campaign: Omit<Campaign, 'id'>): Promise<Campaign> => {
-  const response = await fetch(`${BASE_URL}/campaigns`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(campaign),
-  });
-  return handleResponse(response);
+  const { data } = await api.post<Campaign>('/campaigns', campaign);
+  return data;
 };
+
+export default api;
