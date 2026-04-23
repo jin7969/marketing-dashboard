@@ -1,68 +1,10 @@
-import { useMemo, useState } from 'react';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts';
-import { format, parseISO } from 'date-fns';
-import { useDashboardData } from '../hooks/useDashboardData';
+import { useDashboardChart } from '../hooks/useDashboardChart';
 import { formatNumber } from '../utils/metrics';
-
-type MetricKey = 'impressions' | 'clicks' | 'conversions' | 'cost';
-
-interface MetricOption {
-  label: string;
-  key: MetricKey;
-  color: string;
-}
-
-const METRIC_OPTIONS: MetricOption[] = [
-  { label: '노출수', key: 'impressions', color: '#8884d8' },
-  { label: '클릭수', key: 'clicks', color: '#82ca9d' },
-  { label: '전환수', key: 'conversions', color: '#ffc658' },
-  { label: '비용', key: 'cost', color: '#ff7300' },
-];
+import { METRIC_OPTIONS } from '../constants/dashboard';
 
 export default function DashboardChart() {
-  const { stats } = useDashboardData();
-  const [activeMetrics, setActiveMetrics] = useState<MetricKey[]>(['impressions', 'clicks']);
-
-  // 1. 날짜별 데이터 합산 가공
-  const chartData = useMemo(() => {
-    const dailyMap = new Map<string, Record<MetricKey, number>>();
-
-    stats.forEach((stat) => {
-      const date = stat.date;
-      const current = dailyMap.get(date) || {
-        impressions: 0,
-        clicks: 0,
-        conversions: 0,
-        cost: 0,
-      };
-
-      dailyMap.set(date, {
-        impressions: current.impressions + (stat.impressions || 0),
-        clicks: current.clicks + (stat.clicks || 0),
-        conversions: current.conversions + (stat.conversions || 0),
-        cost: current.cost + (stat.cost || 0),
-      });
-    });
-
-    return Array.from(dailyMap.entries())
-      .map(([date, values]) => ({
-        date,
-        displayDate: format(parseISO(date), 'MM.dd'),
-        ...values,
-      }))
-      .sort((a, b) => a.date.localeCompare(b.date));
-  }, [stats]);
-
-  const toggleMetric = (key: MetricKey) => {
-    setActiveMetrics((prev) => {
-      if (prev.includes(key)) {
-        // 최소 1개는 선택되어 있어야 함
-        if (prev.length <= 1) return prev;
-        return prev.filter((k) => k !== key);
-      }
-      return [...prev, key];
-    });
-  };
+  const { chartData, activeMetrics, toggleMetric } = useDashboardChart();
 
   return (
     <div className="mb-8 rounded-xl border border-gray-100 bg-white p-6 shadow-sm">
