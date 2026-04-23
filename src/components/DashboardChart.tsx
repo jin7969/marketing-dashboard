@@ -1,35 +1,33 @@
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts';
 import { useDashboardChart } from '../hooks/useDashboardChart';
 import { formatNumber } from '../utils/metrics';
+import { Card, Button } from './_common';
 import { METRIC_OPTIONS } from '../constants/dashboard';
 
 export default function DashboardChart() {
   const { chartData, activeMetrics, toggleMetric } = useDashboardChart();
 
   return (
-    <div className="mb-8 rounded-xl border border-gray-100 bg-white p-6 shadow-sm">
-      <div className="mb-6 flex flex-col justify-between gap-4 md:flex-row md:items-center">
-        <h2 className="text-lg font-semibold text-gray-900">일별 추이</h2>
-
-        {/* 메트릭 토글 버튼 */}
+    <Card
+      className="mb-8"
+      title="일별 추이"
+      headerAction={
         <div className="flex flex-wrap gap-2">
           {METRIC_OPTIONS.map((option) => (
-            <button
+            <Button
               key={option.key}
+              variant={activeMetrics.includes(option.key) ? 'secondary' : 'outline'}
+              size="sm"
               onClick={() => toggleMetric(option.key)}
-              className={`rounded-full border px-3 py-1.5 text-xs font-medium transition-all ${
-                activeMetrics.includes(option.key)
-                  ? 'border-blue-200 bg-blue-50 text-blue-600'
-                  : 'border-gray-100 bg-gray-50 text-gray-400 hover:bg-gray-100'
-              }`}
+              className={activeMetrics.includes(option.key) ? 'ring-1 ring-blue-200' : ''}
             >
               {option.label}
-            </button>
+            </Button>
           ))}
         </div>
-      </div>
-
-      <div className="h-100 w-full">
+      }
+    >
+      <div className="h-100 w-full p-6">
         {chartData.length > 0 ? (
           <ResponsiveContainer width="100%" height="100%">
             <AreaChart data={chartData} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
@@ -85,6 +83,6 @@ export default function DashboardChart() {
           </div>
         )}
       </div>
-    </div>
+    </Card>
   );
 }

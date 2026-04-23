@@ -1,3 +1,5 @@
+import { Button } from '../_common';
+
 interface TablePaginationProps {
   currentPage: number;
   totalPages: number;
@@ -8,32 +10,29 @@ export function TablePagination({ currentPage, totalPages, onPageChange }: Table
   if (totalPages <= 1) return null;
 
   return (
-    <div className="flex items-center justify-center gap-2 border-t border-gray-50 p-4">
-      <button
-        disabled={currentPage === 1}
-        onClick={() => onPageChange(currentPage - 1)}
-        className="rounded-lg border border-gray-200 px-3 py-1 text-sm hover:bg-gray-50 disabled:opacity-30"
-      >
+    <div className="flex items-center justify-center gap-2 border-t border-gray-50 p-5">
+      <Button variant="outline" size="sm" disabled={currentPage === 1} onClick={() => onPageChange(currentPage - 1)}>
         이전
-      </button>
+      </Button>
       {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-        <button
+        <Button
           key={page}
+          variant={currentPage === page ? 'primary' : 'ghost'}
+          size="sm"
           onClick={() => onPageChange(page)}
-          className={`h-8 w-8 rounded-lg text-sm transition-colors ${
-            currentPage === page ? 'bg-blue-600 font-bold text-white' : 'text-gray-500 hover:bg-gray-50'
-          }`}
+          className="h-8 w-8 p-0"
         >
           {page}
-        </button>
+        </Button>
       ))}
-      <button
+      <Button
+        variant="outline"
+        size="sm"
         disabled={currentPage === totalPages}
         onClick={() => onPageChange(currentPage + 1)}
-        className="rounded-lg border border-gray-200 px-3 py-1 text-sm hover:bg-gray-50 disabled:opacity-30"
       >
         다음
-      </button>
+      </Button>
     </div>
   );
 }
