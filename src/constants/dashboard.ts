@@ -11,3 +11,5 @@ export const PLATFORM_OPTIONS: { label: string; value: Platform }[] = [
   { label: 'Meta', value: 'Meta' },
   { label: 'Naver', value: 'Naver' },
 ];
+
+export const ITEMS_PER_PAGE = 10;
