@@ -45,14 +45,12 @@ function validate(data: CampaignFormData): CampaignFormErrors {
   if (data.cost === '') errors.cost = '집행금액을 입력해주세요.';
   else if (!Number.isInteger(cost) || cost < 0 || cost > 1_000_000_000)
     errors.cost = '0원 ~ 10억 원 사이의 정수를 입력해주세요.';
-  else if (!errors.budget && cost > budget)
-    errors.cost = '집행금액은 예산을 초과할 수 없습니다.';
+  else if (!errors.budget && cost > budget) errors.cost = '집행금액은 예산을 초과할 수 없습니다.';
 
   if (!data.startDate) errors.startDate = '시작일을 선택해주세요.';
 
   if (!data.endDate) errors.endDate = '종료일을 선택해주세요.';
-  else if (data.startDate && data.endDate <= data.startDate)
-    errors.endDate = '종료일은 시작일 이후여야 합니다.';
+  else if (data.startDate && data.endDate <= data.startDate) errors.endDate = '종료일은 시작일 이후여야 합니다.';
 
   return errors;
 }

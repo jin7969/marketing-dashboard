@@ -18,14 +18,21 @@ export const useDashboardData = () => {
     queryFn: getDailyStats,
   });
 
-  // 1. 캠페인 필터링 (상태, 매체만 적용 - 검색어 제외)
+  // 1. 캠페인 필터링 (상태, 매체, 날짜 범위 적용)
   const filteredCampaigns = useMemo(() => {
     return campaigns.filter((campaign) => {
       const matchesStatus = statuses.includes(campaign.status);
       const matchesPlatform = platforms.includes(campaign.platform);
-      return matchesStatus && matchesPlatform;
+
+      if (!campaign.startDate) return false;
+      const campaignStart = parseISO(campaign.startDate.replace(/\//g, '-'));
+      const campaignEnd = campaign.endDate ? parseISO(campaign.endDate.replace(/\//g, '-')) : null;
+      const matchesDate =
+        campaignStart <= dateRange.endDate && (campaignEnd === null || campaignEnd >= dateRange.startDate);
+
+      return matchesStatus && matchesPlatform && matchesDate;
     });
-  }, [campaigns, statuses, platforms]);
+  }, [campaigns, statuses, platforms, dateRange]);
 
   // 2. 일별 통계 필터링 및 지표 계산
   const { filteredStats, metrics } = useMemo(() => {
