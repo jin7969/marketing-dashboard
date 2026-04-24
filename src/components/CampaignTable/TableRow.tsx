@@ -27,7 +27,7 @@ export function TableRow({ campaign, isSelected, onToggleSelect }: TableRowProps
       <td className="p-4 text-gray-600">
         {campaign.startDate} ~ {campaign.endDate || '진행중'}
       </td>
-      <td className="p-4 font-semibold">{formatCurrency(campaign.budget)}</td>
+      <td className="p-4 font-semibold">{formatCurrency(campaign.metrics.cost)}</td>
       <td className="p-4">{formatPercent(campaign.metrics.ctr)}</td>
       <td className="p-4">{formatNumber(Math.round(campaign.metrics.cpc))}원</td>
       <td className="p-4 font-bold text-blue-600">{formatPercent(campaign.metrics.roas)}</td>

@@ -29,12 +29,7 @@ export function TableHeader({ isAllSelected, onSelectAll, sortConfig, onSort }: 
           currentSort={sortConfig}
           onSort={() => onSort('startDate')}
         />
-        <SortableHeader
-          label="예산"
-          sortKey="budget"
-          currentSort={sortConfig}
-          onSort={() => onSort('budget')}
-        />
+        <SortableHeader label="총 집행금액" sortKey="cost" currentSort={sortConfig} onSort={() => onSort('cost')} />
         <SortableHeader label="CTR" sortKey="ctr" currentSort={sortConfig} onSort={() => onSort('ctr')} />
         <SortableHeader label="CPC" sortKey="cpc" currentSort={sortConfig} onSort={() => onSort('cpc')} />
         <SortableHeader label="ROAS" sortKey="roas" currentSort={sortConfig} onSort={() => onSort('roas')} />
