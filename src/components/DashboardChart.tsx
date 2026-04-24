@@ -9,7 +9,6 @@ export default function DashboardChart() {
 
   return (
     <Card
-      className="mb-8"
       title="일별 추이"
       headerAction={
         <div className="flex flex-wrap gap-2">

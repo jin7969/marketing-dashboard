@@ -14,7 +14,7 @@ export default function FilterBar() {
   };
 
   return (
-    <Card className="mb-8">
+    <Card>
       <div className="flex flex-col divide-y divide-gray-100 lg:flex-row lg:items-center lg:divide-x lg:divide-y-0">
         {/* 기간 필터 */}
         <div className="grow p-5 lg:p-6">
