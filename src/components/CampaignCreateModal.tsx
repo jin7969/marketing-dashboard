@@ -1,9 +1,7 @@
 import { Plus } from 'lucide-react';
 import { Modal, Button, FormField, Input } from './_common';
 import { useCampaignCreateForm } from '../hooks/useCampaignCreateForm';
-import type { Platform } from '../types/dashboard';
-
-const PLATFORMS: Platform[] = ['Google', 'Meta', 'Naver'];
+import { PLATFORMS } from '../constants/dashboard';
 
 interface CampaignCreateModalProps {
   isOpen: boolean;

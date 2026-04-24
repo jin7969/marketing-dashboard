@@ -4,6 +4,7 @@ import { useDashboardData } from './hooks/useDashboardData';
 import Header from './components/Header';
 import FilterBar from './components/filterBar/FilterBar';
 import DashboardChart from './components/DashboardChart';
+import PlatformChart from './components/PlatformChart';
 import CampaignTable from './components/campaignTable/CampaignTable';
 
 function Dashboard() {
@@ -27,6 +28,7 @@ function Dashboard() {
           ) : (
             <>
               <DashboardChart />
+              <PlatformChart />
               <CampaignTable />
             </>
           )}

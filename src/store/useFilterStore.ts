@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import { startOfMonth, endOfMonth } from 'date-fns';
+import { PLATFORMS } from '../constants/dashboard';
 import type { FilterState, Platform, CampaignStatus } from '../types/dashboard';
 
 interface FilterStore extends Omit<FilterState, 'searchTerm'> {
@@ -17,7 +18,7 @@ const initialDateRange = {
 export const useFilterStore = create<FilterStore>((set) => ({
   dateRange: initialDateRange,
   statuses: ['active', 'paused', 'ended'],
-  platforms: ['Google', 'Meta', 'Naver'],
+  platforms: PLATFORMS,
 
   setDateRange: (dateRange) => set({ dateRange }),
   setStatuses: (statuses) => set({ statuses }),
@@ -26,6 +27,6 @@ export const useFilterStore = create<FilterStore>((set) => ({
     set({
       dateRange: initialDateRange,
       statuses: ['active', 'paused', 'ended'],
-      platforms: ['Google', 'Meta', 'Naver'],
+      platforms: PLATFORMS,
     }),
 }));

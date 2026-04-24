@@ -6,6 +6,8 @@ export const STATUS_OPTIONS: { label: string; value: CampaignStatus }[] = [
   { label: '종료', value: 'ended' },
 ];
 
+export const PLATFORMS: Platform[] = ['Google', 'Meta', 'Naver'];
+
 export const PLATFORM_OPTIONS: { label: string; value: Platform }[] = [
   { label: 'Google', value: 'Google' },
   { label: 'Meta', value: 'Meta' },
