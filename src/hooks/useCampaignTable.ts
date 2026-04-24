@@ -1,21 +1,29 @@
 import { useMemo, useState } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { parseISO } from 'date-fns';
 import { useDashboardData } from './useDashboardData';
+import { useFilterStore } from '../store/useFilterStore';
 import { updateCampaignStatus } from '../api';
 import { calculateCampaignMetrics } from '../utils/metrics';
 import type { Campaign, CampaignStatus } from '../types/dashboard';
 import { ITEMS_PER_PAGE } from '../constants/dashboard';
 
-export type SortKey = 'startDate' | 'budget' | 'ctr' | 'cpc' | 'roas';
+export type SortKey = 'startDate' | 'cost' | 'ctr' | 'cpc' | 'roas';
 export type SortOrder = 'asc' | 'desc';
 
 export function useCampaignTable() {
   const queryClient = useQueryClient();
   const { campaigns: filteredCampaigns, stats, isLoading } = useDashboardData();
+  const { dateRange, statuses, platforms } = useFilterStore();
 
   const [searchTerm, setSearchTerm] = useState('');
-  const [currentPage, setCurrentPage] = useState(1);
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
+
+  // 버그 3: 글로벌 필터 변경 시 페이지 1로 리셋 — filterKey가 바뀌면 page를 1로 파생
+  const filterKey = `${statuses.join()}-${platforms.join()}-${dateRange.startDate.getTime()}-${dateRange.endDate.getTime()}`;
+  const [pageState, setPageState] = useState({ filterKey, page: 1 });
+  const currentPage = pageState.filterKey === filterKey ? pageState.page : 1;
+  const setCurrentPage = (page: number) => setPageState({ filterKey, page });
   const [sortConfig, setSortConfig] = useState<{ key: SortKey; order: SortOrder }>({
     key: 'startDate',
     order: 'desc',
@@ -48,10 +56,11 @@ export function useCampaignTable() {
       let bValue = b[sortConfig.key as keyof Campaign] ?? b.metrics[sortConfig.key as keyof typeof b.metrics];
 
       if (sortConfig.key === 'startDate') {
-        aValue = new Date(a.startDate).getTime();
-        bValue = new Date(b.startDate).getTime();
+        aValue = parseISO(a.startDate.replace(/\//g, '-')).getTime();
+        bValue = parseISO(b.startDate.replace(/\//g, '-')).getTime();
       }
 
+      if (aValue === bValue) return 0;
       if (sortConfig.order === 'asc') return aValue > bValue ? 1 : -1;
       return aValue < bValue ? 1 : -1;
     });
