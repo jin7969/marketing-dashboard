@@ -5,6 +5,7 @@ import Header from './components/Header';
 import FilterBar from './components/filterBar/FilterBar';
 import DashboardChart from './components/DashboardChart';
 import PlatformChart from './components/PlatformChart';
+import CampaignRanking from './components/CampaignRanking';
 import CampaignTable from './components/campaignTable/CampaignTable';
 
 function Dashboard() {
@@ -28,7 +29,10 @@ function Dashboard() {
           ) : (
             <>
               <DashboardChart />
-              <PlatformChart />
+              <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+                <PlatformChart />
+                <CampaignRanking />
+              </div>
               <CampaignTable />
             </>
           )}

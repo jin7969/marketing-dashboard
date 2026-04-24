@@ -1,6 +1,7 @@
 export type Platform = 'Google' | 'Meta' | 'Naver';
 export type CampaignStatus = 'active' | 'paused' | 'ended';
 export type MetricKey = 'impressions' | 'clicks' | 'conversions' | 'cost';
+export type RankingMetricKey = 'roas' | 'ctr' | 'cpc';
 
 export interface MetricOption {
   label: string;
