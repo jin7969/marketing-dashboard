@@ -3,7 +3,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { createCampaign } from '../api';
 import type { Platform } from '../types/dashboard';
 
-export interface CampaignFormData {
+interface CampaignFormData {
   name: string;
   platform: Platform;
   budget: string;
@@ -12,7 +12,7 @@ export interface CampaignFormData {
   endDate: string;
 }
 
-export interface CampaignFormErrors {
+interface CampaignFormErrors {
   name?: string;
   budget?: string;
   cost?: string;
