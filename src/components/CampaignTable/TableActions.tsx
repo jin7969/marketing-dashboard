@@ -43,6 +43,7 @@ export function TableActions({
         <div className="flex items-center gap-3">
           <span className="text-sm font-medium text-blue-600">{selectedCount}개 선택됨</span>
           <select
+            key={selectedCount}
             className="rounded-lg border-gray-200 text-xs focus:border-blue-500 focus:ring-blue-500"
             onChange={(e) => {
               if (e.target.value) {
