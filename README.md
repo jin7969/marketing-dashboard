@@ -152,3 +152,29 @@ src/
 ### 데이터 전처리 및 예외 처리
 
 `utils/metrics.ts`에서 CTR, CPC, ROAS 계산 시 분모가 0이거나 `conversionsValue`가 null인 경우를 안전하게 처리합니다. `useDashboardData`에서 필터 적용 후 집계된 daily_stats를 기반으로 파생 지표를 실시간으로 계산합니다.
+
+## 스크린샷
+
+### 데스크탑
+
+**메인 대시보드 — 전체 뷰**
+<img width="1203" height="924" alt="메인 대시보드 전체 뷰" src="https://github.com/user-attachments/assets/3d3bb4d5-b525-419f-ab0c-d660483f4dca" />
+
+**캠페인 테이블 — 필터·정렬·페이지네이션**
+<img width="1181" height="908" alt="캠페인 테이블 필터 및 정렬" src="https://github.com/user-attachments/assets/341b6dcc-effa-4914-b9b5-cd805f320f20" />
+
+**캠페인 등록 모달**
+<img width="628" height="564" alt="캠페인 등록 모달" src="https://github.com/user-attachments/assets/2de68082-6907-44f4-a488-1572dd6ab055" />
+
+### 반응형 (모바일)
+
+<table>
+  <tr>
+    <td><img width="555" height="850" alt="모바일 뷰 상단" src="https://github.com/user-attachments/assets/cf54622f-9931-4f17-94b0-a195bacdaef7" /></td>
+    <td><img width="557" height="853" alt="모바일 뷰 하단" src="https://github.com/user-attachments/assets/6b58645f-95b9-4f01-8081-a43c2e9823a6" /></td>
+  </tr>
+  <tr>
+    <td align="center">상단 — 필터 · 차트</td>
+    <td align="center">하단 — 테이블 · 랭킹</td>
+  </tr>
+</table>
