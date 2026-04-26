@@ -2,11 +2,11 @@ import { QueryClientProvider } from '@tanstack/react-query';
 import { queryClient } from './api/queryClient';
 import { useDashboardData } from './hooks/useDashboardData';
 import Header from './components/Header';
-import FilterBar from './components/filterBar/FilterBar';
+import FilterBar from './components/FilterBar/FilterBar';
 import DashboardChart from './components/DashboardChart';
 import PlatformChart from './components/PlatformChart';
 import CampaignRanking from './components/CampaignRanking';
-import CampaignTable from './components/campaignTable/CampaignTable';
+import CampaignTable from './components/CampaignTable/CampaignTable';
 
 function Dashboard() {
   const { isLoading } = useDashboardData();
