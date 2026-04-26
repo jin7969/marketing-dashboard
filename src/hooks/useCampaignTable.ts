@@ -19,8 +19,8 @@ export function useCampaignTable() {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
 
-  // 버그 3: 글로벌 필터 변경 시 페이지 1로 리셋 — filterKey가 바뀌면 page를 1로 파생
-  const filterKey = `${statuses.join()}-${platforms.join()}-${dateRange.startDate.getTime()}-${dateRange.endDate.getTime()}`;
+  // 버그 3: 글로벌 필터·검색어 변경 시 페이지 1로 리셋 — filterKey가 바뀌면 page를 1로 파생
+  const filterKey = `${statuses.join()}-${platforms.join()}-${dateRange.startDate.getTime()}-${dateRange.endDate.getTime()}-${searchTerm}`;
   const [pageState, setPageState] = useState({ filterKey, page: 1 });
   const currentPage = pageState.filterKey === filterKey ? pageState.page : 1;
   const setCurrentPage = (page: number) => setPageState({ filterKey, page });
