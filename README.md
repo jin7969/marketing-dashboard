@@ -157,16 +157,14 @@ src/
 
 ### 데스크탑
 
-**메인 대시보드 — 전체 뷰**
 <img width="1203" height="924" alt="메인 대시보드 전체 뷰" src="https://github.com/user-attachments/assets/3d3bb4d5-b525-419f-ab0c-d660483f4dca" />
 
-**캠페인 테이블 — 필터·정렬·페이지네이션**
 <img width="1181" height="908" alt="캠페인 테이블 필터 및 정렬" src="https://github.com/user-attachments/assets/341b6dcc-effa-4914-b9b5-cd805f320f20" />
 
 **캠페인 등록 모달**
 <img width="628" height="564" alt="캠페인 등록 모달" src="https://github.com/user-attachments/assets/2de68082-6907-44f4-a488-1572dd6ab055" />
 
-### 반응형 (모바일)
+### 반응형
 
 <table>
   <tr>
