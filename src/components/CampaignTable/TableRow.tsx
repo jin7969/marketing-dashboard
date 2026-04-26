@@ -19,12 +19,12 @@ export function TableRow({ campaign, isSelected, onToggleSelect }: TableRowProps
           className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
         />
       </td>
-      <td className="p-4 font-medium text-gray-900">{campaign.name}</td>
-      <td className="p-4">
+      <td className="min-w-[200px] p-4 font-medium text-gray-900">{campaign.name}</td>
+      <td className="min-w-[120px] p-4">
         <StatusBadge status={campaign.status} />
       </td>
       <td className="p-4 text-gray-600">{campaign.platform}</td>
-      <td className="p-4 text-gray-600">
+      <td className="min-w-[150px] p-4 text-gray-600">
         {campaign.startDate} ~ {campaign.endDate || '진행중'}
       </td>
       <td className="p-4 font-semibold">{formatCurrency(campaign.metrics.cost)}</td>

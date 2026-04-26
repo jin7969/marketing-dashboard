@@ -80,7 +80,7 @@ export default function PlatformChart() {
           )}
         </div>
 
-        <div className="flex-1 space-y-1">
+        <div className="flex-1 space-y-1 overflow-auto">
           {platformData.map((item) => (
             <button
               key={item.platform}
