@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "server": "json-server --watch db.json --port 3001",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
@@ -12,13 +13,12 @@
   },
   "dependencies": {
     "@tanstack/react-query": "^5.99.2",
-    "clsx": "^2.1.1",
+    "axios": "^1.15.2",
     "date-fns": "^4.1.0",
     "lucide-react": "^1.8.0",
     "react": "^19.2.5",
     "react-dom": "^19.2.5",
     "recharts": "^3.8.1",
-    "tailwind-merge": "^3.5.0",
     "zustand": "^5.0.12"
   },
   "devDependencies": {
@@ -28,14 +28,12 @@
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^6.0.1",
-    "autoprefixer": "^10.5.0",
     "eslint": "^9.39.4",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-react-hooks": "^7.1.1",
     "eslint-plugin-react-refresh": "^0.5.2",
     "globals": "^17.5.0",
-    "msw": "^2.13.4",
-    "postcss": "^8.5.10",
+    "json-server": "^0.17.4",
     "prettier": "^3.8.3",
     "prettier-plugin-tailwindcss": "^0.7.2",
     "tailwindcss": "^4.2.2",

@@ -1,18 +1,51 @@
-function App() {
-  return (
-    <main className="min-h-screen bg-gray-50 text-gray-900">
-      <header className="border-b bg-white px-6 py-4">
-        <h1 className="text-xl font-bold tracking-tight">
-          Marketing Dashboard
-        </h1>
-      </header>
+import { QueryClientProvider } from '@tanstack/react-query';
+import { queryClient } from './api/queryClient';
+import { useDashboardData } from './hooks/useDashboardData';
+import Header from './components/Header';
+import FilterBar from './components/filterBar/FilterBar';
+import DashboardChart from './components/DashboardChart';
+import PlatformChart from './components/PlatformChart';
+import CampaignRanking from './components/CampaignRanking';
+import CampaignTable from './components/campaignTable/CampaignTable';
 
-      <div className="mx-auto max-w-7xl p-6">
-        {/* 대시보드 콘텐츠가 여기에 들어옵니다 */}
-        <p className="text-gray-500 italic">콘텐츠 준비 중...</p>
+function Dashboard() {
+  const { isLoading } = useDashboardData();
+
+  return (
+    <div className="min-h-screen bg-gray-50 px-4 py-8 md:px-8">
+      <div className="mx-auto max-w-7xl">
+        <Header />
+
+        <main className="space-y-6">
+          <FilterBar />
+
+          {isLoading ? (
+            <div className="flex h-100 items-center justify-center rounded-xl border border-gray-100 bg-white shadow-sm">
+              <div className="flex flex-col items-center gap-3 text-gray-400">
+                <div className="h-8 w-8 animate-spin rounded-full border-4 border-blue-500 border-t-transparent" />
+                <p className="text-sm font-medium">데이터를 분석하고 있습니다...</p>
+              </div>
+            </div>
+          ) : (
+            <>
+              <DashboardChart />
+              <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+                <PlatformChart />
+                <CampaignRanking />
+              </div>
+              <CampaignTable />
+            </>
+          )}
+        </main>
       </div>
-    </main>
+    </div>
   );
 }
 
-export default App;
+export default function App() {
+  return (
+    <QueryClientProvider client={queryClient}>
+      <Dashboard />
+    </QueryClientProvider>
+  );
+}
